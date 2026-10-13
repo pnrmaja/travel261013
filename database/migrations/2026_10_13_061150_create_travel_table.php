@@ -1,0 +1,28 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('travel', function (Blueprint $table) {
+            $table->unsignedBigInteger('flight_id');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('evaluation');
+            $table->timestamps();
+
+            $table->primary(['flight_id', 'user_id']);
+
+            $table->foreign('flight_id')->references('id')->on('flights');
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('travel');
+    }
+};
